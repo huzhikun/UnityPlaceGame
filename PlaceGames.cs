@@ -87,49 +87,49 @@ public class PlaceGames : MonoBehaviour
             //PlayerOne.Character = "a";
 
         }
+
+        /// <summary>
+        /// 保存用户数据
+        /// </summary>
+        public void SavePlayerData()
+        {
+            PlayerPrefs.SetIn("Strong",strong);
+            PlayerPrefs.SetIn("Intelligence", Intelligence);
+            PlayerPrefs.SetIn("Agility", Agility);
+            PlayerPrefs.SetIn("Luckys", Luckys);
+            PlayerPrefs.SetIn("LV", LV);
+        }
+
+        /// <summary>
+        /// 读取用户数据
+        /// </summary>
+        public void LoadPlayerData()
+        {
+            LV = PlayerPrefs.Get("LV");
+            Strong = PlayerPrefs.Get("Strong");
+            Intelligence = PlayerPrefs.Get("Intelligence");
+            Agility = PlayerPrefs.Get("Agility");
+            Luckys = PlayerPrefs.Get("Luckys");
+        }
+
+        public void OnApplicationQuit()
+        {
+            SavePlayerData();
+        }
     }
 
 
-/*
-    /// <summary>
-    /// 创建角色，初始属性，以及升级属性
-    /// </summary>
-    public float PlayerUpLv()
-    {
-        float UpStrong = Strong+(1+Strong/10)*(LV-1);
-        //如果力量1是8 ，2是8+1.8，基础属性+（1+基础属性/10）*LV
-        float UpIntelligence = Intelligence + (1 + Intelligence / 10) * (LV - 1);
-        float UpAgility = Agility + (1 + Agility / 10) * (LV - 1);
-        int UpLv = LV;
 
-        //定义角色初始生命和魔法
-        float UpHP = UpStrong * 10;
-        float UpMP = UpIntelligence * 3;
-
-        //定义角色初始攻击和防御
-        float UpAttack = UpStrong * 5;
-        float UpDefend = UpStrong * 2;
-
-        //定义玩家升级经验
-        int UpExp = UpLv * 100;
-
-        //初始玩家性格
-        //PlayerOne.Character = "a";
-
-        TextPrint.text = "等级是：" +UpLv+"，力量是："+UpStrong;
-
-        return UpStrong;
-
-    }
-
-*/
 
     void Start()
     {
         RoleAttribute PlayerOne = new RoleAttribute();
         PlayerOne.BasePlayers();
+        PlayerOne.OnApplicationQuit();
+        PlayerOne.LoadPlayerData();
         PlayerOne.PlayerUpLv();
-        TextPrint.text = "等级是：" + PlayerOne.LV + "，力量是：" + PlayerOne.Strong + "，智力是：" + PlayerOne.Intelligence + "，敏捷是：" + PlayerOne.Agility;
+        TextPrint.text = "等级是：" + PlayerOne.LV + "，力量是：" + PlayerOne.Strong + "，智力是："
+                        + PlayerOne.Intelligence + "，敏捷是：" + PlayerOne.Agility+ "，幸运是：" + PlayerOne.Luckys;
 
 
     }
